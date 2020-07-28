@@ -2,5 +2,6 @@ export interface IPost {
   title: string;
   description: string;
   text: string;
-  dateOfCreation: string;
+  // eslint-disable-next-line camelcase
+  date_of_creation: string;
 }
