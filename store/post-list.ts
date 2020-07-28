@@ -13,8 +13,25 @@ export const mutations: MutationTree<PostListModuleState> = {
 }
 
 export const actions: ActionTree<PostListModuleState, RootState> = {
-  setData ({ commit }, data: IPost[]) {
+  setData ({ commit }, data: IPost[]): void {
+    console.log(data)
     commit('SET_DATA', data)
+  },
+
+  async fetchData ({ dispatch }): Promise<void> {
+    await this.$axios({
+      method: 'GET',
+      url: 'http://127.0.0.1:8000/posts'
+    })
+      .catch((error) => {
+        console.log(error)
+      })
+      .then((response) => {
+        if (!response || response.status !== 200) {
+          return
+        }
+        dispatch('setData', response.data)
+      })
   }
 }
 
